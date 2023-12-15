@@ -4,7 +4,7 @@ Travelling Salesman Problem
 member1: <Andrii Bilyi>
 member2: <Markus Viktoria>
 member3: <Voitiv Zakhar>
-member4: <Dmytro Malik>
+member4: <Dmytro Malyk>
 member5: <Veronika Bahatyr-Zakharchenko>
 '''
 from typing import List
