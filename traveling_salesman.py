@@ -100,7 +100,41 @@ def exact_algorithm(graph: dict) -> list:
     :return final_path list: The smallest path through every town
     '''
   pass
+def exact_algorithm(graph: dict) -> list:
+    '''
+    An algorithm to solve Travelling Salesman Problem(TSP)
+    If the path does not exists, returns a message about it
 
+    :param graph dict: Connections between cities
+
+    :return final_path list: The smallest path through every town
+
+    >>> exact_algorithm({1: {2: 10, 3: 15, 4: 20}, 2: {1: 10, 3: 35, 4: 25}, \
+3: {1: 15, 2: 35, 4: 20}, 4: {1: 20, 3: 20, 2: 25}})
+    [1, 2, 4, 3, 1]
+
+    >>> exact_algorithm({1: {2: 10}, 2: {1: 10, 3: 35, 4: 25}, \
+3: {2: 35, 4: 20}, 4: {3: 20, 2: 25}})
+    'There is no possible way'
+    '''
+    final_path = 'There is no possible way'
+    cities = list(graph)
+
+    dst_cities = cities[1:]
+    start_city = cities[0]
+
+    min_length = float('inf')
+
+    for destinations in permutations(dst_cities):
+
+        # Calculates the length of the current path
+        optimal_path, length = calculate_length(graph, \
+        [start_city] + list(destinations) + [start_city], min_length)
+        if length < min_length:
+            min_length = length
+            final_path = optimal_path
+    return final_path
+    
 def greedy_algorithm(graph: dict,
                     current_vertex: int = 1,
                     visited: set = None,
