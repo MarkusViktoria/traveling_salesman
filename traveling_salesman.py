@@ -33,7 +33,25 @@ def read_csv(file_name: str) -> List[List[int]]:
     >>> read_csv(tmpfile.name)
     {1: {2: 5, 5: 7}, 2: {1: 5}, 3: {4: 6}, 4: {3: 6}, 5: {1: 7}}
     """
-  pass
+    with open(file_name, 'r', encoding='utf-8') as file:
+        town_dst={}
+        file_data = [list(map(int, line.strip().split(','))) for line in file]
+    for lst in file_data:
+        for i in range(2):
+            other_town_dst={}
+            other_town_ind= 0 if i == 1 else 1
+
+            # Creates a small dictionary
+            other_town = lst[other_town_ind]
+            other_town_dst[other_town]=lst[2]
+
+            if lst[i] not in town_dst:
+                # Creates a new key-value pair
+                town_dst[lst[i]] = other_town_dst
+            else:
+                # Updates the existing key-value pair
+                town_dst[lst[i]].update(other_town_dst)
+    return town_dst
 
 def calculate_length(graph: dict, path: list, min_length: int) -> tuple:
     '''
