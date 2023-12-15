@@ -150,7 +150,40 @@ def greedy_algorithm(graph: dict,
     :param result list: A result path
 
     :return result list: A result path
-    
+
+    >>> greedy_algorithm({1: {2: 10}, 2: {1: 10, 3: 35, 4: 25}, \
+3: {2: 35, 4: 20}, 4: {3: 20, 2: 25}})
+    'There is no possible way'
+
+    >>> greedy_algorithm({1: {2: 10, 3: 15, 4: 20}, 2: {1: 10, 3: 35, 4: 25}, \
+3: {1: 15, 2: 35, 4: 20}, 4: {1: 20, 3: 20, 2: 25}})
+    [1, 2, 4, 3, 1]
     '''
-pass
+
+    if visited is None and result is None:
+        visited = set()
+        result = []
+
+    visited.add(current_vertex)
+    result.append(current_vertex)
+
+    # Find the unvisited vertexes sorted by distance
+    neighbors = sorted((vertex for vertex in graph[current_vertex] if vertex not in visited),
+                       key=lambda x: graph[current_vertex][x])
+
+    for neighbor in neighbors:
+        sub_result = greedy_algorithm(graph, neighbor, visited, result)
+        if sub_result != 'There is no possible way':
+            return sub_result
+
+    # Returns to the starting point, if the way exists
+    if len(visited) == len(graph) and 1 in graph[current_vertex]:
+        return result + [1]
+
+    # Backtrack if no valid path is found
+    visited.remove(current_vertex)
+    result.pop()
+
+    return 'There is no possible way'
+
 
