@@ -61,7 +61,7 @@ def exact_algorithm(graph: dict) -> list:
     '''
   pass
 
-def greedy_algorithm(graph: list,
+def greedy_algorithm(graph: dict,
                     current_vertex: int = 1,
                     visited: set = None,
                     result: list = None) -> list:
