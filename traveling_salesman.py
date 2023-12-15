@@ -65,8 +65,30 @@ def calculate_length(graph: dict, path: list, min_length: int) -> tuple:
     :param min_length int: A current minimal distaance through cities
 
     :return path, length tuple: A path and its length
+
+    >>> calculate_length({1: {2: 10, 3: 15, 4: 20}, 2: {1: 10, 3: 35, 4: 25}, \
+3: {1: 15, 2: 35, 4: 20}, 4: {1: 20, 3: 20, 2: 25}}, [1, 2, 3, 4, 1], float('inf'))
+    ([1, 2, 3, 4, 1], 85)
+
+    >>> calculate_length({1: {2: 10, 3: 15, 4: 20}, 2: {1: 10, 3: 35, 4: 25}, \
+3: {1: 15, 2: 35, 4: 20}, 4: {1: 20, 3: 20, 2: 25}}, [1, 2, 4, 3, 1], 85)
+    ([1, 2, 4, 3, 1], 70)
     '''
-pass
+    length = 0
+
+    # Checks if the way betweeen two vertexes exists
+    try:
+        for idx in range(len(path) - 1):
+            length += graph[path[idx]][path[idx + 1]]
+
+            # Checks if the current length is bigger than
+            # minimal length
+            if length > min_length:
+                return path, float('inf')
+
+        return path, length
+    except KeyError:
+        return path, float('inf')
 
 def exact_algorithm(graph: dict) -> list:
     '''
